@@ -1,32 +1,28 @@
 package jm.task.core.jdbc;
 
-import jm.task.core.jdbc.util.Util;
-
-import java.sql.*;
+import jm.task.core.jdbc.service.UserService;
+import jm.task.core.jdbc.service.UserServiceImpl;
 
 public class Main {
+
+    private final static UserService userService = new UserServiceImpl();
     public static void main(String[] args) {
         // реализуйте алгоритм здесь
-        Connection connection = Util.open();
 
-        try {
-            String query = "SELECT version()";
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet resultSet = statement.executeQuery();
+        userService.createUsersTable();
 
-            if (resultSet.next()) {
-                String version = resultSet.getString(1);
-                System.out.println("PostgreSQL database version: " + version);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Util.close(connection);
-        }
+        userService.saveUser("Иван","Фёдоров",(byte) 50);
+        userService.saveUser("Пётр","Петров",(byte) 41);
+        userService.saveUser("Света","Светикова",(byte) 34);
+        userService.saveUser("Паша","Смирнов",(byte) 26);
+
+        userService.removeUserById(2);
+        userService.getAllUsers();
+        userService.cleanUsersTable();
+        userService.dropUsersTable();
+
     }
 
-
-
-
 }
+
 
