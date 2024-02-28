@@ -37,6 +37,8 @@ public final class Util {
                 properties.setProperty("hibernate.connection.password", password);
                 properties.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
                 properties.setProperty("hibernate.connection.show_sql", "true");
+                properties.setProperty("hibernate.hbm2ddl.auto", "update");
+                properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
                 Configuration configuration = new Configuration();
                 sessionFactory = configuration.addProperties(properties).addAnnotatedClass(User.class).buildSessionFactory();
             }catch (Exception e){
